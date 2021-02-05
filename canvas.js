@@ -4,18 +4,26 @@ const context = canvas.getContext("2d");
 const cxt = acanvas.getContext("2d");
 const layer = document.querySelector("#layer-canvas");
 const layer2 = document.querySelector("#layer-canvas2");
+const particle = document.querySelector("#particle-canvas");
+const pxt = particle.getContext("2d");
 let stars = [];
 let drops = [];
 
 layer.style.opacity = "0";
 layer2.style.opacity = "0";
+particle.style.opacity = "1";
 
 function init() {
-  //const container = document.querySelector(".temp-container");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+  layer.width = window.innerWidth;
+  layer.height = window.innerHeight;
+  layer2.width = window.innerWidth;
+  layer2.height = window.innerHeight;
   acanvas.width = window.innerWidth;
   acanvas.height = window.innerHeight;
+  particle.width = window.innerWidth;
+  particle.height = window.innerHeight;
 
   for (let i = 0; i < 200; ++i) {
     stars.push({
@@ -57,11 +65,14 @@ function update() {
 
 function updateSec() {
   for (let drop of drops) {
-    drop.y += 0.001;
-    if (drop.y > 1.0) {
-      drop.y = 0.0;
+      //console.log(drop.y);
+    drop.y -= 0.002;
+    if (drop.y < 0.0) {
+      drop.y = 1.0;
     }
   }
+
+ 
 }
 
 function render() {
@@ -83,7 +94,7 @@ function render() {
 }
 
 function renderSec() {
-  const { width, height } = canvas;
+  const { width, height } = acanvas;
   context.clearRect(0, 0, width, height);
   for (let drop of drops) {
     context.beginPath();
@@ -100,9 +111,30 @@ function renderSec() {
   }
 }
 
+
+function renderParticle() {
+
+    const { width, height } = acanvas;
+    pxt.clearRect(0, 0, width, height);
+    for(let star of stars){
+        pxt.beginPath();
+        pxt.arc(
+            star.x * width,
+      star.y * height,
+      star.size * 2,
+      0,
+      2 * Math.PI,
+      false 
+        );
+        pxt.fillStyle = "rgba(200, 220, 255, 0.4)";
+        pxt.fill();
+    }
+}
+
 function onChangeSec() {
   updateSec();
   renderSec();
+  renderParticle();
 }
 
 function onChange() {
@@ -118,6 +150,7 @@ function fetchData() {
   let month = date.getMonth();
   let day = date.getDate();
   let dataArr = [];
+
 
   fetch(link)
     .then((response) => response.json())
@@ -142,14 +175,10 @@ function fetchData() {
 
         if (t > 17) {
           layer.style.opacity = "0.5";
-          layer.width = window.innerWidth;
-          layer.height = window.innerHeight;
           layer2.style.opacity = "0";
           setInterval(onChange, 100);
         } else {
           layer2.style.opacity = "0.7";
-          layer2.width = window.innerWidth;
-          layer2.height = window.innerHeight;
           layer.style.opacity = "0";
           setInterval(onChangeSec, 100);
         }
