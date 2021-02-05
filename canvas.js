@@ -25,7 +25,7 @@ function init() {
   particle.width = window.innerWidth;
   particle.height = window.innerHeight;
 
-  for (let i = 0; i < 200; ++i) {
+  for (let i = 0; i < 150; ++i) {
     stars.push({
       x: Math.random(),
       y: Math.random(),
