@@ -167,7 +167,7 @@ function fetchData() {
         cxt.fillStyle = "#fff";
         cxt.fillText(
           `${dataArr[0]}°`,
-          acanvas.width / 1.98,
+          acanvas.width / 1.96,
           acanvas.height / 2
         );
 
@@ -189,7 +189,7 @@ function fetchData() {
           `${dataArr[2]} | ${year}년 ${month + 1}월 ${day}일 ${
             dataArr[1]
           } 측정   `,
-          acanvas.width / 2,
+          acanvas.width / 1.98,
           acanvas.height / 1.6
         );
 
@@ -206,7 +206,7 @@ function fetchData() {
         cxt.fillStyle = "#fff";
         cxt.fillText(
           `⚠ 데이터를 가져올 수 없습니다.`,
-          acanvas.width / 1.98,
+          acanvas.width / 2,
           acanvas.height / 2
         );
       }
