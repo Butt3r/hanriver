@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;500&family=Noto+Serif+KR:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <title>Static Template</title>
+    <style>
+      #bg-canvas {
+        background-color: rgba(4, 20, 59, 0.952);
+      }
+      #layer-canvas {
+        background-image: linear-gradient(
+          rgba(255, 0, 140, 0.397) 10%,
+          rgba(129, 54, 248, 0.924) 75%
+        );
+        background-attachment: fixed;
+      }
+      #layer-canvas2 {
+        background-image: linear-gradient(
+          rgb(189, 247, 184) 15%,
+          rgb(9, 149, 230) 85%
+        );
+        background-attachment: fixed;
+      }
+    </style>
+    <canvas
+      id="layer-canvas"
+      style="z-index: 1; position: absolute; left: 0px; top: 0px;"
+    >
+    </canvas>
+    <canvas
+      id="layer-canvas2"
+      style="z-index: 1; position: absolute; left: 0px; top: 0px;"
+    >
+    </canvas>
+    <canvas
+      id="bg-canvas"
+      style="z-index: -1; position: absolute; left: 0px; top: 0px;"
+    >
+    </canvas>
+    <canvas
+      id="api-canvas"
+      style="z-index: 3; position: absolute; left: 0px; top: 0px;"
+    >
+    </canvas>
+  </head>
+  <body>
+    <script src="canvas.js"></script>
+  </body>
+</html>
