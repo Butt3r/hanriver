@@ -8,12 +8,14 @@ const particle = document.querySelector("#particle-canvas");
 const pxt = particle.getContext("2d");
 let stars = [];
 let drops = [];
+let date = new Date();
 
 layer.style.opacity = "0";
 layer2.style.opacity = "0";
 particle.style.opacity = "1";
 
-function init() {
+
+function resize(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   layer.width = window.innerWidth;
@@ -24,6 +26,10 @@ function init() {
   acanvas.height = window.innerHeight;
   particle.width = window.innerWidth;
   particle.height = window.innerHeight;
+}
+
+function init() {
+  
 
   for (let i = 0; i < 150; ++i) {
     stars.push({
@@ -65,8 +71,7 @@ function update() {
 
 function updateSec() {
   for (let drop of drops) {
-      //console.log(drop.y);
-    drop.y -= 0.002;
+    drop.y -= 0.001;
     if (drop.y < 0.0) {
       drop.y = 1.0;
     }
@@ -119,7 +124,7 @@ function renderParticle() {
     for(let star of stars){
         pxt.beginPath();
         pxt.arc(
-            star.x * width,
+      star.x * width,
       star.y * height,
       star.size * 2,
       0,
@@ -142,10 +147,25 @@ function onChange() {
   render();
 }
 
+function renderInterval(){
+
+  let t = date.getHours();
+
+        if (t > 17) {
+          layer.style.opacity = "0.5";
+          layer2.style.opacity = "0";
+          setInterval(onChange, 100);
+        } else {
+          layer2.style.opacity = "0.7";
+          layer.style.opacity = "0";
+          setInterval(onChangeSec, 100);
+        }
+}
+
+
 function fetchData() {
   const link = `https://api.hangang.msub.kr/`;
 
-  let date = new Date();
   let year = date.getFullYear();
   let month = date.getMonth();
   let day = date.getDate();
@@ -158,12 +178,12 @@ function fetchData() {
       if (data.status === "success") {
         dataArr.push(data.temp, data.time, data.station);
 
-        cxt.font = "1.7em Noto Serif KR";
+        cxt.font = "1.7em Noto Sans KR";
         cxt.textAlign = "center";
         cxt.fillStyle = "#fff";
         cxt.fillText("지금 한강은...", acanvas.width / 2, acanvas.height / 4);
 
-        cxt.font = "bold 9.7em Heebo";
+        cxt.font = "bold 9em Heebo";
         cxt.fillStyle = "#fff";
         cxt.fillText(
           `${dataArr[0]}°`,
@@ -171,19 +191,7 @@ function fetchData() {
           acanvas.height / 2
         );
 
-        let t = date.getHours();
-
-        if (t > 17) {
-          layer.style.opacity = "0.5";
-          layer2.style.opacity = "0";
-          setInterval(onChange, 100);
-        } else {
-          layer2.style.opacity = "0.7";
-          layer.style.opacity = "0";
-          setInterval(onChangeSec, 100);
-        }
-
-        cxt.font = "1.2em Noto Serif KR";
+        cxt.font = "1.2em Noto Sans KR";
         cxt.fillStyle = "#fff";
         cxt.fillText(
           `${dataArr[2]} | ${year}년 ${month + 1}월 ${day}일 ${
@@ -201,7 +209,7 @@ function fetchData() {
           acanvas.height / 1.05
         );
       } else {
-        cxt.font = "bold 3em Heebo";
+        cxt.font = "bold 3em Noto Sans KR";
         cxt.textAlign = "center";
         cxt.fillStyle = "#fff";
         cxt.fillText(
@@ -215,4 +223,15 @@ function fetchData() {
 }
 
 init();
+resize();
 fetchData();
+renderInterval();
+
+window.addEventListener(
+  "resize",
+  function () {
+    resize();
+    fetchData();
+  },
+  false
+);
