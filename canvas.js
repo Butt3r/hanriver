@@ -30,8 +30,13 @@ function resize(){
 
 function init() {
   
+  console.log(window.innerWidth, window.innerHeight);
 
-  for (let i = 0; i < 150; ++i) {
+  let num = 0;
+  window.innerWidth > 1000 ? num = 150 : num = 50;
+
+
+  for (let i = 0; i < num; ++i) {
     stars.push({
       x: Math.random(),
       y: Math.random(),
