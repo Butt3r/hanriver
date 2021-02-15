@@ -32,9 +32,10 @@ function init() {
   
   console.log(window.innerWidth, window.innerHeight);
 
+
   let num = 0;
   window.innerWidth > 1000 ? num = 150 : num = 50;
-
+  
 
   for (let i = 0; i < num; ++i) {
     stars.push({
