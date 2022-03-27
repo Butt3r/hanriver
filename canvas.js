@@ -200,9 +200,7 @@ function fetchData() {
         cxt.font = "1.2em Noto Sans KR";
         cxt.fillStyle = "#fff";
         cxt.fillText(
-          `${dataArr[2]} | ${year}년 ${month + 1}월 ${day}일 ${
-            dataArr[1]
-          } 측정   `,
+          `${dataArr[2]} | ${dataArr[1]} 측정   `,
           acanvas.width / 1.98,
           acanvas.height / 1.6
         );
